@@ -1,0 +1,18 @@
+version: '3'
+services:
+  reports-service:
+    build: './reports-service'
+    ports:
+      - 7004:7004
+    volumes:
+      - ./reports-service:/opt/app
+
+  mongodb-service:
+    image: mongo:latest
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    ports:
+      - 27017:27017
+    volumes:
+      - ./mongodb_data_container:/data/db
