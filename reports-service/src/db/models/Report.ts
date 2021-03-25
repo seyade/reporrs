@@ -1,6 +1,7 @@
 import { Schema, Document, model } from 'mongoose';
 
 export interface ReportType extends Document {
+	_id: string;
 	stepName: string;
 	stepTitle: string;
 	description: string;
@@ -10,6 +11,7 @@ export interface ReportType extends Document {
 
 export const ReportSchema: Schema = new Schema(
 	{
+		_id: Schema.Types.ObjectId,
 		stepName: String,
 		stepTitle: String,
 		description: String,

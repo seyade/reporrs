@@ -3,70 +3,12 @@ import { ApolloServer } from 'apollo-server-express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
-import {
-	GraphQLObjectType,
-	GraphQLString,
-	GraphQLInt,
-	GraphQLBoolean,
-	GraphQLList,
-} from 'graphql';
 
 import Report from '../db/models/Report';
 import typeDefs from '../graphql/typeDefs';
 import resolvers from '../graphql/resolvers';
 
 import connection from './connection';
-
-const ReportType = new GraphQLObjectType({
-	name: 'Report',
-	fields: () => ({
-		id: { type: GraphQLString },
-		stepName: { type: GraphQLString },
-		stepTitle: { type: GraphQLString },
-		description: { type: GraphQLString },
-		addToReport: { type: GraphQLBoolean },
-		date: { type: GraphQLString },
-	}),
-});
-
-const RootQuery = new GraphQLObjectType({
-	name: 'RootQueryType',
-	fields: {
-		getAllReports: {
-			type: GraphQLList(ReportType),
-			args: { id: { type: GraphQLInt } },
-			resolve(parent, args) {
-				return Report.find().lean();
-			},
-		},
-	},
-});
-
-const Mutation = new GraphQLObjectType({
-	name: 'Mutation',
-	fields: {
-		createReport: {
-			type: ReportType,
-			args: {
-				stepName: { type: GraphQLString },
-				stepTitle: { type: GraphQLString },
-				description: { type: GraphQLString },
-				addToReport: { type: GraphQLBoolean },
-				date: { type: GraphQLString },
-			},
-			async resolve(parent, args) {
-				await Report.create({
-					stepName: args.stepName,
-					stepTitle: args.stepTitle,
-					description: args.description,
-					addToReport: args.addToReport,
-					date: args.date,
-				});
-				return args;
-			},
-		},
-	},
-});
 
 const app: Express = express();
 
@@ -81,7 +23,7 @@ app.get('/', async (req: Request, res: Response) => {
 // GET reports
 app.get('/reports', async (req: Request, res: Response) => {
 	try {
-		const reports = await Report.find({}).lean();
+		const reports = await Report.find().lean();
 		res.status(200).json({ reports });
 	} catch (error) {
 		res.json({ error, errormessage: 'Error fetching all reports!' });
