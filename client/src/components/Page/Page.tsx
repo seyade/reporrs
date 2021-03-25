@@ -1,43 +1,18 @@
 import React, { ReactNode } from 'react';
-import styled from 'styled-components';
 
 import Sidebar from '../Sidebar';
+
+import {
+	PageWrapper,
+	PageInnerWrapper,
+	PageContentWrapper,
+} from './PageStyled';
 
 export interface PageProps {
 	title?: string;
 	subTitle?: string;
 	children: ReactNode;
 }
-
-const PageWrapper = styled.main`
-	display: flex;
-	flex-
-	padding: 32px;
-
-	h1 {
-		text-align: center;
-		margin-bottom: 24px;
-	}
-`;
-
-const PageInnerWrapper = styled.main`
-	flex: 1 0 75%;
-
-	header {
-		> h1,
-		> h2 {
-			text-align: center;
-			margin-bottom: 24px;
-		}
-	}
-`;
-
-const PageContentWrapper = styled.div`
-	width: 960px;
-	padding: 44px;
-	margin: 0 auto;
-	border-radius: 12px;
-`;
 
 function Page({ title, subTitle, children }: PageProps) {
 	return (

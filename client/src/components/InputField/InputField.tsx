@@ -1,6 +1,18 @@
 import React, { ChangeEvent } from 'react';
 import styled from 'styled-components';
 
+import { Field, FieldInput, FieldLabel } from './InputFieldStyled';
+
+export enum InputTypes {
+	Text = 'text',
+	Password = 'password',
+	Checkbox = 'checkbox',
+	Radio = 'radio',
+	Email = 'email',
+	Date = 'date',
+	Number = 'number',
+}
+
 export interface InputFieldProps {
 	type?: string;
 	checked?: boolean;
@@ -9,48 +21,10 @@ export interface InputFieldProps {
 	value?: string;
 	text?: string;
 	placeholder?: string;
-	order?: number | string;
 	onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
-export enum InputTypes {}
-
-const Field = styled.span.attrs(props => ({
-	className: props.className,
-}))`
-	display: inline-block;
-	margin-bottom: 16px;
-	display: inline-flex;
-	flex: 1 0 100%;
-	width: 100%;
-`;
-
-const FieldLabel = styled.label.attrs(props => ({
-	htmlFor: props.htmlFor,
-	className: props.className,
-}))`
-	display: flex;
-	align-items: center;
-	width: 100%;
-`;
-
-const FieldInput = styled.input`
-	display: inline-block;
-	width: 100%;
-	font-family: 'Montserrat', sans-serif;
-	font-size: 16px;
-	border: 0;
-	background-color: #e5e5e5;
-	border-radius: 4px;
-	padding: 12px 16px;
-
-	&[type='checkbox'] {
-		width: auto;
-		margin-right: 8px;
-	}
-`;
-
-const InputField = ({
+const InputField: React.FC<InputFieldProps> = ({
 	type,
 	checked,
 	value,
@@ -58,9 +32,8 @@ const InputField = ({
 	name,
 	text,
 	placeholder,
-	order,
 	onChange,
-}: InputFieldProps) => {
+}) => {
 	return type === 'checkbox' ? (
 		<Field className="inputField inputField--checkbox">
 			<FieldLabel className="inputField__label" htmlFor={id}>

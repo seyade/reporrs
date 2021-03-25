@@ -1,5 +1,6 @@
 import React, { ChangeEvent } from 'react';
-import styled from 'styled-components';
+
+import { Field, FieldLabel, FieldTextarea } from './TextareaFieldStyled';
 
 export interface TextareaFieldProps {
 	cols?: number;
@@ -13,37 +14,7 @@ export interface TextareaFieldProps {
 	onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
-const Field = styled.span.attrs(props => ({
-	className: props.className,
-}))`
-	display: inline-block;
-	width: 100%;
-	margin-bottom: 16px;
-`;
-
-const FieldLabel = styled.label.attrs(props => ({
-	htmlFor: props.htmlFor,
-	className: props.className,
-}))`
-	display: flex;
-	align-items: center;
-
-	input {
-		margin-right: 8px;
-	}
-`;
-
-const FieldTextarea = styled.textarea`
-	width: 100%;
-	padding: 12px 16px;
-	font-family: 'Montserrat', sans-serif;
-	font-size: 16px;
-	background-color: #e5e5e5;
-	border: 0;
-	border-radius: 4px;
-`;
-
-const TextareaField = ({
+const TextareaField: React.FC<TextareaFieldProps> = ({
 	cols,
 	rows,
 	value,
@@ -53,7 +24,7 @@ const TextareaField = ({
 	placeholder,
 	order,
 	onChange,
-}: TextareaFieldProps) => {
+}) => {
 	const inputId = order ? `${id}__${order}` : id;
 
 	return (

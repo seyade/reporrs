@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from '../Home';
 import Reports from '../Reports';
 
-const Root = () => {
+const Root: React.FC = () => {
 	return (
 		<Router>
 			<Switch>

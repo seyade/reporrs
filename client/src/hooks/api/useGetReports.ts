@@ -15,6 +15,7 @@ export type ReportList = {
 export const GET_REPORTS = gql`
 	{
 		reports {
+			_id
 			stepName
 			stepTitle
 			description
@@ -26,7 +27,9 @@ export const GET_REPORTS = gql`
 `;
 
 export const useGetReports = () => {
-	const { data } = useQuery<ReportList>(GET_REPORTS);
+	const { data, loading } = useQuery<ReportList>(GET_REPORTS);
+
+	console.log('LOADING:::', loading);
 
 	if (typeof data !== 'undefined' && Array.isArray(data.reports)) {
 		const reportList = [...data.reports];
