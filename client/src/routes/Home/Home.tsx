@@ -1,7 +1,7 @@
 import React from 'react';
 import Page from '../../components/Page';
 
-const Home = () => {
+const Home: React.FC = () => {
 	return (
 		<Page title="Reporrs" subTitle="Create your progress report">
 			<article>

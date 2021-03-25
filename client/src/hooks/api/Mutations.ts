@@ -17,7 +17,7 @@ export const CREATE_REPORT_MUTATION = gql`
 		) {
 			stepName
 			stepTitle
-			id
+			_id
 		}
 	}
 `;
@@ -39,7 +39,17 @@ export const UPDATE_REPORT_MUTATION = gql`
 		) {
 			stepName
 			stepTitle
-			id
+			_id
+		}
+	}
+`;
+
+export const DELETE_REPORT_MUTATION = gql`
+	mutation deleteReport($_id: ID!) {
+		deleteReport(_id: $_id) {
+			stepName
+			stepTitle
+			_id
 		}
 	}
 `;

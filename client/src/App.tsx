@@ -4,7 +4,7 @@ import Root from './routes/Root';
 
 function App() {
 	return (
-		<div className="App">
+		<div className="App" data-testid="reporrs">
 			<Root />
 		</div>
 	);

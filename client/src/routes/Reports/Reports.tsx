@@ -1,47 +1,18 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 
 import Page from '../../components/Page';
+import ConfirmDialog from '../../components/ConfirmDialog';
 import { useGetReports } from '../../hooks/api/useGetReports';
+import useDialog from '../../hooks/useDialog';
+
 import AddForm from './AddForm';
 import ReportItem, { ReportItemProps } from './ReportItem';
-
-const MainTitle = styled.header`
-	h1 {
-		font-weight: 300;
-		margin-bottom: 44px;
-		margin-left: 16px;
-		text-align: left;
-
-		span {
-			font-weight: 700;
-		}
-	}
-`;
-
-const AddReportButton = styled.button`
-	display: flex;
-	align-items: center;
-	padding: 16px 20px;
-	margin-left: 28px;
-	margin-bottom: 16px;
-	font-family: 'Montserrat', sans-serif;
-	font-weight: 600;
-	color: #333;
-	background-color: rgba(255, 192, 0, 1);
-	border: 0;
-	border-radius: 4px;
-	cursor: pointer;
-
-	span {
-		margin-right: 8px;
-		font-size: 20px;
-	}
-`;
+import { MainTitle, AddReportButton } from './ReportsStyled';
 
 function Reports() {
 	const [isVisible, setIsVisible] = useState(false);
 	const reports = useGetReports();
+	const { isShowing, closeDialog, showDialog } = useDialog();
 
 	const openModal = () => {
 		setIsVisible(true);
@@ -68,12 +39,26 @@ function Reports() {
 			<div>
 				{typeof reports !== 'undefined' && reports?.length ? (
 					reports.map((report: ReportItemProps['report'], index: number) => {
-						return <ReportItem report={report} order={index} key={index} />;
+						return (
+							<ReportItem
+								report={report}
+								showDialog={showDialog}
+								order={index}
+								key={index}
+							/>
+						);
 					})
 				) : (
 					<h1>JUST FUCKING DO IT!</h1>
 				)}
 			</div>
+
+			<ConfirmDialog
+				onConfirm={closeDialog}
+				visible={isShowing}
+				confirmTitle="Delete day report"
+				confirmText="Are you sure you want to delete this report?"
+			/>
 		</Page>
 	);
 }

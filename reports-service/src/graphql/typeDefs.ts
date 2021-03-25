@@ -3,6 +3,7 @@ import { gql } from 'apollo-server';
 const typeDefs = gql`
 	type Report {
 		id: ID!
+		_id: ID!
 		stepName: String!
 		stepTitle: String!
 		description: String
@@ -31,7 +32,7 @@ const typeDefs = gql`
 		): Report
 
 		updateReport(
-			id: ID!
+			_id: ID!
 			stepName: String
 			stepTitle: String
 			description: String
@@ -39,7 +40,7 @@ const typeDefs = gql`
 			date: String
 		): Report
 
-		deleteReport(id: ID!): Report
+		deleteReport(_id: ID!): Report
 	}
 `;
 

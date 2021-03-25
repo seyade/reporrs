@@ -10,12 +10,12 @@ export interface DatePickerFieldProps {
 	handleOnChange: (date: Date) => void;
 }
 
-const DatePickerField = ({
+const DatePickerField: React.FC<DatePickerFieldProps> = ({
 	startDate,
 	placeholder,
 	name,
 	handleOnChange,
-}: DatePickerFieldProps) => {
+}) => {
 	return (
 		<div className="datepicker-wrapper">
 			<DatePicker

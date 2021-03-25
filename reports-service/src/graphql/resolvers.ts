@@ -2,7 +2,7 @@ import Report from '../db/models/Report';
 
 const resolvers = {
 	Query: {
-		reports: async () => {
+		async reports() {
 			return await Report.find().lean();
 		},
 	},
@@ -19,10 +19,10 @@ const resolvers = {
 		},
 
 		async updateReport(parent: any, args: any, context: any, info: any) {
-			if (!args.id) return;
+			if (!args._id) return;
 
 			return await Report.findOneAndUpdate(
-				{ _id: args.id },
+				{ _id: args._id },
 				{
 					$set: { ...args },
 				},
@@ -36,7 +36,7 @@ const resolvers = {
 		},
 
 		async deleteReport(parent: any, args: any, context: any, info: any) {
-			return await Report.findByIdAndDelete(args.id);
+			return await Report.findByIdAndDelete(args._id);
 		},
 	},
 };
