@@ -1,5 +1,6 @@
 import React, { useState, ChangeEvent } from 'react';
 import styled from 'styled-components';
+import { useSpring, animated } from 'react-spring';
 import { useMutation } from '@apollo/react-hooks';
 import DatePickerField from '../../../components/DatePickerField';
 // import { useForm } from 'react-hook-form';
@@ -89,6 +90,14 @@ function AddForm({
 		},
 	});
 
+	const animation = useSpring({
+		config: {
+			duration: 300,
+		},
+		opacity: visible ? 1 : 0,
+		transform: visible ? `translateY(0%)` : `translateY(-100%)`,
+	});
+
 	const handleOnChange = (date: Date) => {
 		setStartDate(date);
 	};
@@ -132,64 +141,66 @@ function AddForm({
 
 	return (
 		<Modal isShowing={visible}>
-			<FormWrapper onSubmit={event => event.preventDefault()}>
-				<CloseButton onClick={closeModal}>&times;</CloseButton>
+			<animated.div style={animation}>
+				<FormWrapper onSubmit={event => event.preventDefault()}>
+					<CloseButton onClick={closeModal}>&times;</CloseButton>
 
-				<h3>Add a day report</h3>
+					<h3>Add a day report</h3>
 
-				<Form>
-					<div>
-						<DatePickerField
-							name="stepDate"
-							startDate={startDate}
-							handleOnChange={handleOnChange}
-							placeholder="Select a date..."
-						/>
-					</div>
-					<div>
-						<InputField
-							name="stepName"
-							onChange={handleStepName}
-							value={stepName}
-							placeholder="Step name..."
-						/>
-					</div>
+					<Form>
+						<div>
+							<DatePickerField
+								name="stepDate"
+								startDate={startDate}
+								handleOnChange={handleOnChange}
+								placeholder="Select a date..."
+							/>
+						</div>
+						<div>
+							<InputField
+								name="stepName"
+								onChange={handleStepName}
+								value={stepName}
+								placeholder="Step name..."
+							/>
+						</div>
 
-					<div>
-						<InputField
-							name="stepTitle"
-							onChange={handleStepTitle}
-							value={stepTitle}
-							placeholder="Step title..."
-						/>
-					</div>
+						<div>
+							<InputField
+								name="stepTitle"
+								onChange={handleStepTitle}
+								value={stepTitle}
+								placeholder="Step title..."
+							/>
+						</div>
 
-					<div>
-						<TextareaField
-							name="description"
-							cols={7}
-							rows={5}
-							onChange={handleDescription}
-							value={description}
-							placeholder="Step description..."
-						/>
-					</div>
+						<div>
+							<TextareaField
+								name="description"
+								cols={7}
+								rows={5}
+								onChange={handleDescription}
+								value={description}
+								placeholder="Step description..."
+							/>
+						</div>
 
-					<div>
-						<InputField
-							name={`newAddToReport`}
-							text="Add to report"
-							type="checkbox"
-							onChange={handleAddToReport}
-							checked={addToReport}
-						/>
-					</div>
+						<div>
+							<InputField
+								name={`newAddToReport`}
+								text="Add to report"
+								type="checkbox"
+								onChange={handleAddToReport}
+								checked={addToReport}
+							/>
+						</div>
 
-					<Button type="button" onClick={addReport}>
-						Add new day report
-					</Button>
-				</Form>
-			</FormWrapper>
+						<Button type="button" onClick={addReport}>
+							Add new day report
+						</Button>
+					</Form>
+				</FormWrapper>
+			</animated.div>
 		</Modal>
 	);
 }

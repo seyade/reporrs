@@ -5,7 +5,6 @@ import React, {
 	useEffect,
 	useRef,
 } from 'react';
-import { useSpring, animated } from 'react-spring';
 
 import {
 	CloseModalButton,
@@ -28,14 +27,6 @@ const Modal: React.FC<ModalProps> = ({
 	setIsShowing,
 }) => {
 	const modalRef = useRef();
-
-	const animation = useSpring({
-		config: {
-			duration: 300,
-		},
-		opacity: isShowing ? 1 : 0,
-		transform: isShowing ? `translateY(0%)` : `translateY(-100%)`,
-	});
 
 	const closeModal = (event: MouseEvent<HTMLDivElement>) => {
 		if (modalRef.current === event.currentTarget && setIsShowing) {
@@ -65,17 +56,15 @@ const Modal: React.FC<ModalProps> = ({
 		<>
 			{isShowing ? (
 				<ModalWrapper onClick={closeModal} ref={modalRef}>
-					<animated.div style={animation}>
-						<ModalParent>
-							{showCloseButton && (
-								<CloseModalButton
-									arial-label="Close modal"
-									onClick={handleCloseModal}
-								/>
-							)}
-							<ModalBody>{children}</ModalBody>
-						</ModalParent>
-					</animated.div>
+					<ModalParent>
+						{showCloseButton && (
+							<CloseModalButton
+								arial-label="Close modal"
+								onClick={handleCloseModal}
+							/>
+						)}
+						<ModalBody>{children}</ModalBody>
+					</ModalParent>
 				</ModalWrapper>
 			) : null}
 		</>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSpring, animated } from 'react-spring';
 
 import Modal from '../../components/Modal';
 
@@ -26,6 +27,14 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
 	isShowing,
 	setIsShowing,
 }) => {
+	const animation = useSpring({
+		config: {
+			duration: 250,
+		},
+		opacity: isShowing ? 1 : 0,
+		transform: isShowing ? `translateY(0%)` : `translateY(-100%)`,
+	});
+
 	const handleClose = () => {
 		setIsShowing(false);
 	};
@@ -42,15 +51,17 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
 				setIsShowing={setIsShowing}
 				showCloseButton={false}
 			>
-				<DialogWrapper>
-					<h3>{confirmTitle}</h3>
-					<p>{confirmText}</p>
+				<animated.div style={animation}>
+					<DialogWrapper>
+						<h3>{confirmTitle}</h3>
+						<p>{confirmText}</p>
 
-					<DialogActions>
-						<CancelButton onClick={handleClose}>Cancel</CancelButton>
-						<ConfirmButton onClick={handleConfirm}>OK</ConfirmButton>
-					</DialogActions>
-				</DialogWrapper>
+						<DialogActions>
+							<CancelButton onClick={handleClose}>Cancel</CancelButton>
+							<ConfirmButton onClick={handleConfirm}>OK</ConfirmButton>
+						</DialogActions>
+					</DialogWrapper>
+				</animated.div>
 			</Modal>
 		</>
 	);
