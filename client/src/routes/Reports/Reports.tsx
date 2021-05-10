@@ -37,8 +37,7 @@ function Reports() {
 					data: {
 						reports: [
 							...existingReports.reports.filter(
-								(report: ReportType) =>
-									newReportResponse.stepName !== report.stepName
+								(report: ReportType) => newReportResponse._id !== report._id
 							),
 						],
 					},
