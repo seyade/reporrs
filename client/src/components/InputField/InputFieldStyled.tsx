@@ -4,7 +4,8 @@ export const Field = styled.span.attrs(props => ({
 	className: props.className,
 }))`
 	display: inline-block;
-	display: inline-flex;
+	width: 100%;
+	margin-bottom: 16px;
 `;
 
 export const FieldLabel = styled.label.attrs(props => ({
@@ -21,10 +22,13 @@ export const FieldInput = styled.input`
 	width: 100%;
 	font-family: 'Montserrat', sans-serif;
 	font-size: 16px;
-	border: 0;
-	background-color: #e5e5e5;
+	border: 1px solid #b5b5b5;
 	border-radius: 4px;
 	padding: 12px 16px;
+
+	&::placeholder {
+		color: #d5d5d5;
+	}
 
 	&[type='checkbox'] {
 		width: auto;

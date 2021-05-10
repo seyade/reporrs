@@ -2,20 +2,20 @@ import { useState, useEffect } from 'react';
 
 type useDialogType = {
 	isShowing: boolean;
-	showDialog: () => void;
-	closeDialog: () => void;
+	showDialog: (show: boolean) => void;
+	closeDialog: (show: boolean) => void;
 };
 
 const useDialog = (): useDialogType => {
 	const [isShowing, setIsShowing] = useState(false);
 
-	const showDialog = () => {
-		setIsShowing(true);
+	const showDialog = (show: boolean) => {
+		setIsShowing(show);
 	};
 
-	const closeDialog = () => {
+	const closeDialog = (show: boolean) => {
 		console.log('DIALOG_STATE:SHOWING:BBB:', isShowing);
-		setIsShowing(false);
+		setIsShowing(show);
 	};
 
 	useEffect(() => {

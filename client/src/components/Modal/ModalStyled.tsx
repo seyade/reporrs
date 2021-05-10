@@ -1,8 +1,13 @@
+import { MouseEvent, Ref } from 'react';
 import styled from 'styled-components';
+import { MdClose } from 'react-icons/md';
 
-import { ModalProps } from './Modal';
+export interface ModalWrapperProps {
+	onClick: (event: MouseEvent<HTMLDivElement>) => void;
+	ref: any;
+}
 
-export const ModalParent = styled.div<ModalProps>`
+export const ModalWrapper = styled.div<ModalWrapperProps>`
 	position: fixed;
 	top: 0%;
 	left: 0%;
@@ -15,9 +20,13 @@ export const ModalParent = styled.div<ModalProps>`
 	background-color: rgba(0, 0, 0, 0.3);
 `;
 
+export const ModalParent = styled.div``;
+
 export const ModalBody = styled.div`
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 `;
+
+export const CloseModalButton = styled(MdClose)``;

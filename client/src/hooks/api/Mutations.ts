@@ -1,5 +1,19 @@
 import { gql } from '@apollo/client';
 
+export const GET_REPORTS = gql`
+	{
+		reports {
+			_id
+			stepName
+			stepTitle
+			description
+			addToReport
+			date
+			createdAt
+		}
+	}
+`;
+
 export const CREATE_REPORT_MUTATION = gql`
 	mutation createReport(
 		$stepName: String!

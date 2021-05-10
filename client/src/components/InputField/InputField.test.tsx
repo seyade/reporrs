@@ -1,5 +1,8 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
+import { shallow } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+import toJson from 'enzyme-to-json';
 
 import InputField from './InputField';
 
@@ -9,6 +12,12 @@ it('renders correctly', () => {
 	);
 
 	expect(queryByPlaceholderText('Report name')).toBeTruthy();
+});
+
+describe('InputField Snapshot', () => {
+	let wrapper = shallow(<InputField />);
+
+	expect(toJson(wrapper)).toMatchSnapshot();
 });
 
 describe('InputField value', () => {
