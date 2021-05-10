@@ -6,8 +6,8 @@ import Modal from '../../components/Modal';
 export interface ConfirmDialogProps {
 	onClick?: () => void;
 	onConfirm: () => void;
-	confirmText?: string;
-	confirmTitle?: string;
+	confirmText?: string | React.ReactNode;
+	confirmTitle?: string | React.ReactNode;
 	visible: boolean;
 	children?: React.ReactNode;
 }
@@ -75,7 +75,7 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
 	confirmTitle,
 	visible,
 }) => {
-	const [isVisible, setIsVisible] = useState(false);
+	const [, setIsVisible] = useState(false);
 
 	const handleClose = () => {
 		setIsVisible(false);
@@ -91,7 +91,7 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
 	}, [visible]);
 
 	return (
-		<Modal visible={isVisible}>
+		<Modal>
 			<DialogWrapper>
 				<h3>{confirmTitle}</h3>
 				<p>{confirmText}</p>

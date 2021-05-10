@@ -25,7 +25,10 @@ export const FieldTextarea = styled.textarea`
 	padding: 12px 16px;
 	font-family: 'Montserrat', sans-serif;
 	font-size: 16px;
-	background-color: #e5e5e5;
-	border: 0;
+	border: 1px solid #b5b5b5;
 	border-radius: 4px;
+
+	&::placeholder {
+		color: #d5d5d5;
+	}
 `;

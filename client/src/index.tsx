@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createGlobalStyle } from 'styled-components';
-// import { ApolloProvider } from '@apollo/react-hooks';
+import { ApolloProvider } from '@apollo/react-hooks';
 // import { ApolloProvider } from 'react-apollo';
-import { ApolloProvider } from '@apollo/client';
+// import { ApolloProvider } from '@apollo/client/react';
 
 import App from './App';
 import reportWebVitals from './reportWebVitals';

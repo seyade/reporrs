@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import Modal from '../../components/Modal';
-import useDialog from '../../hooks/useDialog';
 
 import {
 	DialogWrapper,
@@ -13,46 +12,47 @@ import {
 export interface ConfirmDialogProps {
 	onClick?: () => void;
 	onConfirm: () => void;
-	confirmText?: string;
-	confirmTitle?: string;
-	visible: boolean;
+	confirmText?: React.ReactNode | string;
+	confirmTitle?: React.ReactNode | string;
 	children?: React.ReactNode;
+	isShowing: any;
+	setIsShowing: any;
 }
 
 const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
 	onConfirm,
 	confirmText,
 	confirmTitle,
-	visible,
+	isShowing,
+	setIsShowing,
 }) => {
-	const [isVisible, setIsVisible] = useState(false);
-	const { closeDialog, isShowing } = useDialog();
-
 	const handleClose = () => {
-		closeDialog();
+		setIsShowing(false);
 	};
 
 	const handleConfirm = () => {
 		onConfirm();
-		setIsVisible(false);
+		setIsShowing(false);
 	};
 
-	useEffect(() => {
-		setIsVisible(visible);
-	}, [visible, isVisible]);
-
 	return (
-		<Modal visible={isShowing}>
-			<DialogWrapper>
-				<h3>{confirmTitle}</h3>
-				<p>{confirmText}</p>
+		<>
+			<Modal
+				isShowing={isShowing}
+				setIsShowing={setIsShowing}
+				showCloseButton={false}
+			>
+				<DialogWrapper>
+					<h3>{confirmTitle}</h3>
+					<p>{confirmText}</p>
 
-				<DialogActions>
-					<CancelButton onClick={handleClose}>Cancel</CancelButton>
-					<ConfirmButton onClick={handleConfirm}>OK</ConfirmButton>
-				</DialogActions>
-			</DialogWrapper>
-		</Modal>
+					<DialogActions>
+						<CancelButton onClick={handleClose}>Cancel</CancelButton>
+						<ConfirmButton onClick={handleConfirm}>OK</ConfirmButton>
+					</DialogActions>
+				</DialogWrapper>
+			</Modal>
+		</>
 	);
 };
 

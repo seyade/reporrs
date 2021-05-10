@@ -1,13 +1,16 @@
 import React, { useState, ChangeEvent } from 'react';
 import styled from 'styled-components';
 import { useMutation } from '@apollo/react-hooks';
-import DatePickerField from '../../components/DatePickerField';
+import DatePickerField from '../../../components/DatePickerField';
 // import { useForm } from 'react-hook-form';
 
-import InputField from '../../components/InputField';
-import TextareaField from '../../components/TextareaField';
-import Modal from '../../components/Modal';
-import { CREATE_REPORT_MUTATION } from '../../hooks/api/Mutations';
+import InputField from '../../../components/InputField';
+import TextareaField from '../../../components/TextareaField';
+import Modal from '../../../components/Modal';
+import {
+	GET_REPORTS,
+	CREATE_REPORT_MUTATION,
+} from '../../../hooks/api/Mutations';
 
 import 'react-datepicker/dist/react-datepicker.min.css';
 
@@ -68,7 +71,23 @@ function AddForm({
 	const [description, setDescription] = useState('');
 	const [addToReport, setAddToReport] = useState(false);
 	const [startDate, setStartDate] = useState(new Date());
-	const [createReport, { error }] = useMutation(CREATE_REPORT_MUTATION);
+
+	const [createReport, { error }] = useMutation(CREATE_REPORT_MUTATION, {
+		// update UI when add
+		update(cache, { data }) {
+			const newReportResponse = data?.createReport;
+			const existingReports = cache.readQuery<any>({ query: GET_REPORTS });
+
+			if (existingReports && newReportResponse) {
+				cache.writeQuery({
+					query: GET_REPORTS,
+					data: {
+						reports: [...existingReports?.reports, newReportResponse],
+					},
+				});
+			}
+		},
+	});
 
 	const handleOnChange = (date: Date) => {
 		setStartDate(date);
@@ -93,6 +112,7 @@ function AddForm({
 	const addReport = () => {
 		if (error) {
 			console.log('CREATE_REPORT_ERROR::', error);
+			return;
 		}
 
 		const newReport = {
@@ -106,10 +126,12 @@ function AddForm({
 		createReport({
 			variables: newReport,
 		});
+
+		closeModal();
 	};
 
 	return (
-		<Modal visible={visible}>
+		<Modal isShowing={visible}>
 			<FormWrapper onSubmit={event => event.preventDefault()}>
 				<CloseButton onClick={closeModal}>&times;</CloseButton>
 
@@ -163,7 +185,9 @@ function AddForm({
 						/>
 					</div>
 
-					<Button onClick={addReport}>Add new day report</Button>
+					<Button type="button" onClick={addReport}>
+						Add new day report
+					</Button>
 				</Form>
 			</FormWrapper>
 		</Modal>

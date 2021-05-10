@@ -11,7 +11,6 @@ export interface ReportType extends Document {
 
 export const ReportSchema: Schema = new Schema(
 	{
-		_id: Schema.Types.ObjectId,
 		stepName: String,
 		stepTitle: String,
 		description: String,
